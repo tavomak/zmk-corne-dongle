@@ -2,20 +2,20 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
+    - name: gpeye
+      url-base: https://github.com/GPeye
     - name: tokyo2006
       url-base: https://github.com/tokyo2006
     - name: englmaxi
       url-base: https://github.com/englmaxi
-    - name: m165437
-      url-base: https://github.com/M165437
   projects:
+    - name: hammerbeam-slideshow
+      remote: gpeye
+      revision: main 
     - name: zmk
       remote: zmkfirmware
       revision: v0.3.0
       import: app/west.yml
-    - name: nice-view-gem
-      remote: m165437
-      revision: main
     - name: prospector-zmk-module                 # <--- and these
       remote: tokyo2006                          # <---
       revision: change_spi2
