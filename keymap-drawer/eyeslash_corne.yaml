@@ -1,6 +1,6 @@
 layout: {zmk_keyboard: eyeslash_corne}
 layers:
-  QWERTY:
+  BASE:
   - $$mdi:keyboard-tab$$
   - Q
   - W
@@ -39,8 +39,8 @@ layers:
   - $$mdi:keyboard-esc$$
   - LGUI
   - NUMBER
-  - {t: '$$mdi:keyboard-space$$', h: Fn}
-  - {t: '$$mdi:keyboard-return$$', h: Fn}
+  - {t: '$$mdi:keyboard-space$$', h: FUNCTION}
+  - {t: '$$mdi:keyboard-return$$', h: FUNCTION}
   - SYMBOL
   - $$mdi:apple-keyboard-option$$
   NUMBER:
@@ -129,7 +129,7 @@ layers:
   - {t: '$$mdi:keyboard-return$$', type: enter}
   - {type: held}
   - {t: '$$mdi:transfer$$', type: trans}
-  Fn:
+  FUNCTION:
   - '&studio_unlock'
   - F1
   - F2
