@@ -1,6 +1,6 @@
 /*
  * ╔══════════════════════════════════════════════════════════════════════════╗
- * ║                    EYESLASH CORNE KEYMAP CONFIGURATION                   ║
+ * ║                    Tavomak's CORNE KEYMAP CONFIGURATION                   ║
  * ╚══════════════════════════════════════════════════════════════════════════╝
  */
 
@@ -105,10 +105,9 @@
         // - mo 1: Momentary layer 1 (NUMBER)
         // - mo 2: Momentary layer 2 (SYMBOL)
         // - lt 3: Layer-tap 3 (Fn) con Space/Enter
-        // - Dongle: Controles direccionales y Enter en el centro
         // ====================================================================
         default_layer {
-            display-name = "QWERTY";
+            display-name = "BASE";
             bindings = <
 // ╭──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────╮   ╭──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────╮
 //  TAB                Q                  W                  E                  R                  T                      Y                  U                  I                  O                  P                  BSPC
@@ -135,7 +134,6 @@
         // - Bluetooth: BT_CLR_ALL, BT_SEL 0-3
         // - RGB: ON/OFF, Efectos, Velocidad, Brillo
         // - Navegación: Flechas, Home, End, Page Up/Down
-        // - Mouse: Movimiento y clic izquierdo en dongle
         // ====================================================================
         lower_layer {
             display-name = "NUMBER";
@@ -165,7 +163,6 @@
         // - Símbolos de programación: - = [ ] \ ` _ + { } | ~
         // - Bluetooth: BT_CLR
         // - Output: USB/BLE toggle
-        // - Mouse: Clics (L/M/R/MB4/MB5) y movimiento en dongle
         // ====================================================================
         raise_layer {
             display-name = "SYMBOL";
@@ -194,11 +191,9 @@
         // - Teclas de función: F1-F12
         // - Sistema: Bootloader, System Reset, Studio Unlock
         // - Teclas especiales: Print Screen, Scroll Lock, Pause Break
-        // - Mouse: Clics (L/M/R/MB4/MB5) y movimiento en dongle
-        // - Mute en encoder del lado izquierdo
         // ====================================================================
         layer_3 {
-            display-name = "Fn";
+            display-name = "FUNCTION";
             bindings = <
 // ╭──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────╮   ╭──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────╮
 //  STUDIO_UNLOCK      F1                 F2                 F3                 F4                 F5                     F6                 F7                 F8                 F9                F10                F11
