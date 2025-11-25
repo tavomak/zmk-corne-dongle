@@ -5,9 +5,9 @@ Tavomak's custom wireless split keyboard configuration for the Corne keyboard wi
 ## ✨ Features
 
 - **🔌 Wireless Dongle Mode**: Central dongle with left and right peripheral halves
-- **🖱️ Mouse Support**: Full mouse movement and button control via keyboard
-- **🎨 RGB Lighting**: Customizable RGB effects with encoder control
-- **🎡 Rotary Encoder**: Volume control, RGB brightness, and scroll functionality
+- **🖱️ Mouse Support**: Scroll and button clicks via keyboard (no cursor movement by default)
+- **🎨 RGB Lighting**: Customizable RGB underglow effects
+- **🎡 Rotary Encoder**: Volume control on base layer and scroll on other layers
 - **📊 OLED Display**: Battery status, WPM counter, and modifier indicators
 - **🔋 Power Efficient**: Optimized power consumption with automatic sleep
 - **🎹 ZMK Studio**: Real-time keymap editing support
@@ -44,7 +44,7 @@ Numbers, navigation, and system controls.
 - **Bluetooth**: BT clear, device selection (0-3)
 - **RGB Controls**: On/Off, effects, speed, brightness
 - **Navigation**: Arrow keys, Home, End, Page Up/Down
-- **Mouse**: Movement controls on dongle
+- **Mouse**: Scroll control via encoder
 
 ### Layer 2: SYMBOL
 All symbols and special characters.
@@ -72,7 +72,6 @@ The project uses GitHub Actions for automated builds. Each push will generate fi
 - **Left Peripheral** (with E-paper display)
 - **Right Peripheral** (with E-paper display)
 - **Settings Reset**
-``
 
 ## 📝 ZMK Studio
 
