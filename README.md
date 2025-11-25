@@ -26,7 +26,7 @@ Tavomak's custom wireless split keyboard configuration for the Corne keyboard wi
 
 ## 🎨 Keymap Visualization
 
-<img src="keymap-drawer/eyeslash_corne.svg" alt="Eyeslash Corne Keymap">
+![Keymap View](./keymap-drawer/eyeslash_corne.svg)
 
 ## ⌨️ Keymap Layers
 
@@ -107,7 +107,7 @@ The e-paper displays use the [nice!view ZMK widget](https://nicekeyboards.com/ni
 - **WPM Counter**: Words per minute typing speed
 - **Low Power Consumption**: E-paper technology for extended battery life
 
-<img src="https://nicekeyboards.com/docs/images/nice-view-1.jpg" alt="nice!view E-Paper Display" width="400">
+![Nice view](./assets/niceview.JPG)
 
 ### nice!view Widget Configuration
 
@@ -131,6 +131,8 @@ The central dongle uses the [zmk-dongle-display module](https://github.com/englm
 - **WPM Counter**: Real-time typing speed display
 - **Connection Status**: Bluetooth connectivity feedback for each peripheral
 - **Central Dongle Focus**: Optimized display for dongle-based split keyboard setups
+
+![Dongle Display](./assets/dongle.JPG)
 
 ### Dongle Display Widget Configuration
 
