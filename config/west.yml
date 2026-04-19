@@ -15,7 +15,7 @@ manifest:
       import: app/west.yml
     - name: zmk-nice-oled
       remote: mctechnology17
-      revision: main
+      revision: f96cb4552cf6020748f458b4d999c32412e73cf7
     - name: prospector-zmk-module
       remote: tokyo2006
       revision: change_spi2
