@@ -1,17 +1,21 @@
 /*
  * ╔══════════════════════════════════════════════════════════════════════════╗
- * ║                    Tavomak's CORNE KEYMAP CONFIGURATION                   ║
+ * ║                    Tavomak's CORNE KEYMAP CONFIGURATION                  ║
+ * ╠══════════════════════════════════════════════════════════════════════════╣
+ * ║  5 layers: BASE · NUMBER · SYMBOL · FUNCTION · SETTINGS                 ║
+ * ║  OS: macOS Spanish (Spain) — keycodes derived accordingly                ║
+ * ║  Specs: .claude/specs/01–07                                              ║
  * ╚══════════════════════════════════════════════════════════════════════════╝
  */
 
 // ============================================================================
-// CONFIGURACIÓN DE MOUSE/POINTING DEVICE
+// MOUSE CONFIG
 // ============================================================================
-#define ZMK_POINTING_DEFAULT_MOVE_VAL 1200  // Velocidad de movimiento del mouse (default: 600)
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 25    // Velocidad de scroll (default: 10)
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 1200
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 25
 
 // ============================================================================
-// INCLUDES - Librerías necesarias
+// INCLUDES
 // ============================================================================
 #include <input/processors.dtsi>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
@@ -24,66 +28,108 @@
 #include <dt-bindings/zmk/rgb.h>
 
 // ============================================================================
-// CONFIGURACIÓN DE INPUT PROCESSORS
+// INPUT PROCESSORS
 // ============================================================================
-&mmv_input_listener { 
-    input-processors = <&zip_xy_scaler 2 1>; 
+&mmv_input_listener {
+    input-processors = <&zip_xy_scaler 2 1>;
 };
 
-&msc_input_listener { 
-    input-processors = <&zip_scroll_scaler 2 1>; 
+&msc_input_listener {
+    input-processors = <&zip_scroll_scaler 2 1>;
 };
 
 // ============================================================================
-// CONFIGURACIÓN DE MOUSE SCROLL (msc)
+// MOUSE SCROLL
 // ============================================================================
 &msc {
-    acceleration-exponent = <1>;        // Exponente de aceleración (default: 0)
-    time-to-max-speed-ms = <100>;       // Tiempo para alcanzar velocidad máxima (default: 300)
-    delay-ms = <0>;                     // Delay antes de iniciar scroll (default: 0)
+    acceleration-exponent = <1>;
+    time-to-max-speed-ms = <100>;
+    delay-ms = <0>;
 };
 
 // ============================================================================
-// CONFIGURACIÓN DE MOUSE MOVEMENT (mmv)
+// MOUSE MOVEMENT
 // ============================================================================
 &mmv {
-    time-to-max-speed-ms = <500>;       // Tiempo para alcanzar velocidad máxima
-    acceleration-exponent = <1>;        // Exponente de aceleración
-    trigger-period-ms = <16>;           // Período de actualización (60 FPS)
+    time-to-max-speed-ms = <500>;
+    acceleration-exponent = <1>;
+    trigger-period-ms = <16>;
 };
 
-
-// ============================================================================
-// DEFINICIÓN DE BEHAVIORS PERSONALIZADOS
-// ============================================================================
 / {
-    behaviors {
-        // ------------------------------------------------------------------------
-        // TAP DANCE: Shift/Caps Lock
-        // Un toque = Shift | Dos toques = Caps Lock
-        // ------------------------------------------------------------------------
-        td0: td0 {
-            compatible = "zmk,behavior-tap-dance";
-            display-name = "Shift/Caps Lock Tap Dance";
+
+    // ========================================================================
+    // MACROS — spec 07
+    // ========================================================================
+    macros {
+
+        // => (JS arrow function)
+        // Sends = then > under Spanish macOS
+        macro_arrow: macro_arrow {
+            compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LEFT_SHIFT>, <&kp CAPS>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LS(N0)>, <&kp LS(NON_US_BSLH)>;
+        };
+
+        // {} with cursor inside (JS/CSS block)
+        // Sends { then } then LEFT arrow
+        macro_block: macro_block {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp LA(SQT)>, <&kp LA(BSLH)>, <&kp LEFT>;
         };
     };
 
-    // ------------------------------------------------------------------------
-    // ENCODER RGB: Controla el brillo del RGB
-    // Girar = Aumentar/Disminuir brillo
-    // ------------------------------------------------------------------------
+    // ========================================================================
+    // BEHAVIORS — specs 02, 06
+    // ========================================================================
+    behaviors {
+
+        // Tap = SHIFT / Hold = CTRL — spec 02
+        // flavor=balanced + require-prior-idle avoids CTRL on fast typing
+        mt_ctrl_shift: mt_ctrl_shift {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <200>;
+            require-prior-idle-ms = <125>;
+            bindings = <&kp>, <&kp>;
+        };
+
+        // 1 tap = RSHIFT / 2 taps = CAPS_WORD — spec 06
+        td_shift_caps: td_shift_caps {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp RSHIFT>, <&caps_word>;
+        };
+
+        // 1 tap = ' / 2 taps = " — spec 06
+        // MINUS = ' and LS(N2) = " under Spanish macOS
+        td_quote: td_quote {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp MINUS>, <&kp LS(N2)>;
+        };
+    };
+
+    // ========================================================================
+    // ENCODERS
+    // ========================================================================
+
+    // RGB brightness (not used in any layer currently — available for future)
     rgb_encoder: rgb_encoder {
         compatible = "zmk,behavior-sensor-rotate";
         #sensor-binding-cells = <0>;
         bindings = <&rgb_ug RGB_BRI>, <&rgb_ug RGB_BRD>;
     };
 
-    // ------------------------------------------------------------------------
-    // ENCODER SCROLL: Controla el scroll del mouse
-    // Girar = Scroll arriba/abajo
-    // ------------------------------------------------------------------------
+    // Scroll — used in layers 1-4
     scroll_encoder: scroll_encoder {
         compatible = "zmk,behavior-sensor-rotate";
         #sensor-binding-cells = <0>;
@@ -92,48 +138,57 @@
     };
 
     // ========================================================================
-    // KEYMAP - CAPAS DEL TECLADO
+    // TRI-LAYER: NUMBER (1) + SYMBOL (2) → SETTINGS (4) — spec 03
+    // ========================================================================
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        settings_layer {
+            if-layers = <1 2>;
+            then-layer = <4>;
+        };
+    };
+
+    // ========================================================================
+    // KEYMAP
     // ========================================================================
     keymap {
         compatible = "zmk,keymap";
 
         // ====================================================================
-        // CAPA 0: DEFAULT (QWERTY)
+        // LAYER 0: BASE — specs 01, 02
         // ====================================================================
-        // Distribución estándar QWERTY con modificadores y acceso a capas
-        // - td0: Tap Dance (Shift/Caps)
-        // - mo 1: Momentary layer 1 (NUMBER)
-        // - mo 2: Momentary layer 2 (SYMBOL)
-        // - lt 3: Layer-tap 3 (Fn) con Space/Enter
+        // Thumb left:  ALT | CMD | SPACE/FN
+        // Thumb right: ENTER/FN | NUM | SYM
+        // Pinky left:  ESC (top) | TAB (home) | CTRL/SHIFT (bottom)
+        // Pinky right: BSPC (top) | ´ (home) | SHIFT/CAPS (bottom)
         // ====================================================================
         default_layer {
             display-name = "BASE";
             bindings = <
 // ╭──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────╮   ╭──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────╮
-//  TAB                Q                  W                  E                  R                  T                      Y                  U                  I                  O                  P                  BSPC
-    &kp TAB            &kp Q              &kp W              &kp E              &kp R              &kp T                  &kp Y              &kp U              &kp I              &kp O              &kp P              &kp BSPC
+//  ESC                Q                  W                  E                  R                  T                      Y                  U                  I                  O                  P                  BSPC
+    &kp ESC            &kp Q              &kp W              &kp E              &kp R              &kp T                  &kp Y              &kp U              &kp I              &kp O              &kp P              &kp BSPC
 // ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤   ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
-//  SHFT/CAPS          A                  S                  D                  F                  G                      H                  J                  K                  L                  ;                  '
-    &td0               &kp A              &kp S              &kp D              &kp F              &kp G                  &kp H              &kp J              &kp K              &kp L              &kp SEMI           &kp SQT
+//  TAB                A                  S                  D                  F                  G                      H                  J                  K                  L                  ñ                  ´(dead)
+    &kp TAB            &kp A              &kp S              &kp D              &kp F              &kp G                  &kp H              &kp J              &kp K              &kp L              &kp SEMI           &kp SQT
 // ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤   ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
-//  CTRL               Z                  X                  C                  V                  B                      N                  M                  ,                  .                  /                 ESC
-    &kp LCTRL          &kp Z              &kp X              &kp C              &kp V              &kp B                  &kp N              &kp M              &kp COMMA          &kp DOT            &kp FSLH           &kp ESC
+//  tap=SHIFT hold=CTRL Z                 X                  C                  V                  B                      N                  M                  ,                  .                  -                  tap=SHIFT 2x=CAPS
+    &mt_ctrl_shift LCTRL LSHIFT &kp Z    &kp X              &kp C              &kp V              &kp B                  &kp N              &kp M              &kp COMMA          &kp DOT            &kp FSLH           &td_shift_caps
 // ╰──────────────────┴──────────────────┴──────────────────┼──────────────────┼──────────────────┼──────────────────┤   ├──────────────────┼──────────────────┼──────────────────┴──────────────────┴──────────────────┴──────────────────╯
-//                                                           GUI                NUM                LT3/SPACE              LT3/ENTER          SYM                ALT
-                                                             &kp LGUI           &mo 1              &lt 3 SPACE            &lt 3 ENTER        &mo 2              &kp RALT
+//                                                           ALT                CMD                tap=SPC hold=FN        tap=ENT hold=FN    NUM                SYM
+                                                             &kp LALT           &kp LGUI           &lt 3 SPACE            &lt 3 ENTER        &mo 1              &mo 2
 //                                                          ╰──────────────────┴──────────────────┴──────────────────╯   ╰──────────────────┴──────────────────┴──────────────────╯
             >;
-            sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>;  // Encoder: Control de volumen
+            sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>;
         };
 
         // ====================================================================
-        // CAPA 1: NUMBER (Números y Navegación)
+        // LAYER 1: NUMBER — Numbers + Operators + nvim Navigation — spec 04
         // ====================================================================
-        // Activa con: mo 1 (mantener presionado)
-        // - Números 0-9 en fila superior
-        // - Bluetooth: BT_CLR_ALL, BT_SEL 0-3
-        // - RGB: ON/OFF, Efectos, Velocidad, Brillo
-        // - Navegación: Flechas, Home, End, Page Up/Down
+        // Home row left:   + - * / =  (operators, Spanish macOS keycodes)
+        // Home row right:  ← ↓ ↑ → HOME PGUP  (hjkl navigation)
+        // Bottom row left: w← w→ gg G  (word/doc jumps)
+        // Bottom row right: END PGDN line-start line-end
         // ====================================================================
         lower_layer {
             display-name = "NUMBER";
@@ -142,74 +197,96 @@
 //  ---                1                  2                  3                  4                  5                       6                  7                  8                  9                  0                  BSPC
     &trans             &kp N1             &kp N2             &kp N3             &kp N4             &kp N5                  &kp N6             &kp N7             &kp N8             &kp N9             &kp N0             &kp BSPC
 // ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤    ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
-//  ---                BT_CLR             BT_0               BT_1               BT_2               BT_3                    LEFT               DOWN                UP                RIGHT              HOME               PG_UP
-    &trans             &bt BT_CLR_ALL     &bt BT_SEL 0       &bt BT_SEL 1       &bt BT_SEL 2       &bt BT_SEL 3            &kp LEFT           &kp DOWN           &kp UP             &kp RIGHT          &kp HOME           &kp PG_UP
+//  ---                +                  -                  *                  /                  =                       ←                  ↓                  ↑                  →                  HOME               PGUP
+    &trans             &kp RBKT           &kp FSLH           &kp LS(RBKT)       &kp LS(N7)         &kp LS(N0)              &kp LEFT           &kp DOWN           &kp UP             &kp RIGHT          &kp HOME           &kp PG_UP
 // ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤    ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
-//  ---                RGB_OFF            RGB_ON             ---                ---                RGB_EFF                 RGB_EFR            RGB_SPI            RGB_BRI            RGB_BRD            END                PG_DN
-    &trans             &rgb_ug RGB_OFF    &rgb_ug RGB_ON     &trans             &trans             &rgb_ug RGB_EFF         &rgb_ug RGB_EFR    &rgb_ug RGB_SPI    &rgb_ug RGB_BRI    &rgb_ug RGB_BRD    &kp END            &kp PG_DN
+//  ---                w←(Opt+←)         w→(Opt+→)          gg(Cmd+↑)          G(Cmd+↓)           ---                     END                PGDN               ^(Cmd+←)           $(Cmd+→)           ---                ---
+    &trans             &kp LA(LEFT)       &kp LA(RIGHT)      &kp LG(UP)         &kp LG(DOWN)       &trans                  &kp END            &kp PG_DN          &kp LG(LEFT)       &kp LG(RIGHT)      &trans             &trans
 // ╰──────────────────┴──────────────────┴──────────────────┼──────────────────┼──────────────────┼──────────────────┤    ├──────────────────┼──────────────────┼──────────────────┴──────────────────┴──────────────────┴──────────────────╯
-//                                                           ---                ---                ---                     INS                DEL                ---
-                                                             &trans             &trans             &trans                  &kp INS            &kp DEL            &trans
+//                                                           ---                ---                ---                     ---                held               ---
+                                                             &trans             &trans             &trans                  &trans             &trans             &trans
 //                                                          ╰──────────────────┴──────────────────┴──────────────────╯    ╰──────────────────┴──────────────────┴──────────────────╯
             >;
-            sensor-bindings = <&scroll_encoder>;  // Encoder: Scroll
+            sensor-bindings = <&scroll_encoder>;
         };
 
         // ====================================================================
-        // CAPA 2: SYMBOL (Símbolos)
+        // LAYER 2: SYMBOL — Direct symbols for Spanish macOS — spec 05
         // ====================================================================
-        // Activa con: mo 2 (mantener presionado)
-        // - Símbolos: ! @ # $ % ^ & * ( )
-        // - Símbolos de programación: - = [ ] \ ` _ + { } | ~
-        // - Bluetooth: BT_CLR
-        // - Output: USB/BLE toggle
+        // All keycodes produce the correct character under Spanish macOS.
+        // LA() = Option/Alt combo. NON_US_BSLH = ISO key (< / >).
         // ====================================================================
         raise_layer {
             display-name = "SYMBOL";
             bindings = <
 // ╭──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────╮   ╭──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────╮
-//  ---                !                  @                  #                  $                  %                      ^                  &                  *                  (                  )                BSPC
-    &trans             &kp EXCL           &kp AT             &kp HASH           &kp DLLR           &kp PRCNT              &kp CARET          &kp AMPS           &kp ASTRK          &kp LPAR           &kp RPAR           &kp BSPC
+//  ---                <                  >                  !                  &                  |                      ---                '/"(tap dance)      `                  ~                  \                  BSPC
+    &trans             &kp NON_US_BSLH    &kp LS(NON_US_BSLH) &kp LS(N1)       &kp LS(N6)         &kp LA(N1)             &trans             &td_quote          &kp LBKT           &kp LA(SEMI)       &kp LA(GRAVE)      &kp BSPC
 // ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤   ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
-//  ---                BT_CLR             M_LEFT             M_MIDDLE           M_RIGHT            M_BTN4                 -                  =                  [                  ]                  \                  `
-    &trans             &bt BT_CLR         &mkp LCLK          &mkp MCLK          &mkp RCLK          &mkp MB4               &kp MINUS          &kp EQUAL          &kp LBKT           &kp RBKT           &kp BSLH           &kp GRAVE
+//  ---                {                  }                  [                  ]                  ?                      _                  -                  ;                  :                  (                  )
+    &trans             &kp LA(SQT)        &kp LA(BSLH)        &kp LA(LBKT)      &kp LA(RBKT)       &kp LS(MINUS)          &kp LS(FSLH)       &kp FSLH           &kp LS(COMMA)      &kp LS(DOT)        &kp LS(N8)         &kp LS(N9)
 // ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤   ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
-//  ---                OUT_USB            OUT_BLE            ---                ---                M_BTN5                 _                  +                  {                  }                  |                  ~
-    &trans             &out OUT_USB       &out OUT_BLE       &none              &none              &mkp MB5               &kp UNDER          &kp PLUS           &kp LBRC           &kp RBRC           &kp PIPE           &kp TILDE
+//  ---                @                  #                  =                  %                  ---                    +                  *                  =>                 {|}                ---                ---
+    &trans             &kp LA(N2)         &kp LA(N3)          &kp LS(N0)        &kp LS(N5)         &trans                 &kp RBKT           &kp LS(RBKT)       &macro_arrow       &macro_block       &trans             &trans
 // ╰──────────────────┴──────────────────┴──────────────────┼──────────────────┼──────────────────┼──────────────────┤   ├──────────────────┼──────────────────┼──────────────────┴──────────────────┴──────────────────┴──────────────────╯
-//                                                           ---                ---                SPACE                  ENTER              ---                ---
+//                                                           ---                ---                SPC                    ENT                held               ---
                                                              &trans             &trans             &kp SPACE              &kp RET            &trans             &trans
 //                                                          ╰──────────────────┴──────────────────┴──────────────────╯   ╰──────────────────┴──────────────────┴──────────────────╯
             >;
-            sensor-bindings = <&scroll_encoder>;  // Encoder: Scroll
+            sensor-bindings = <&scroll_encoder>;
         };
 
         // ====================================================================
-        // CAPA 3: Fn (Funciones y Sistema)
+        // LAYER 3: FUNCTION — F1-F12 + Media + Mouse — spec 03
         // ====================================================================
-        // Activa con: lt 3 (layer-tap con Space/Enter)
-        // - Teclas de función: F1-F12
-        // - Sistema: Bootloader, System Reset, Studio Unlock
-        // - Teclas especiales: Print Screen, Scroll Lock, Pause Break
+        // Mouse consolidated on home row left.
+        // Media keys on bottom row left.
+        // BOOTLOADER removed — only accessible from SETTINGS.
         // ====================================================================
         layer_3 {
             display-name = "FUNCTION";
             bindings = <
 // ╭──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────╮   ╭──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────╮
-//  STUDIO_UNLOCK      F1                 F2                 F3                 F4                 F5                     F6                 F7                 F8                 F9                F10                F11
+//  STUDIO_UNLOCK      F1                 F2                 F3                 F4                 F5                     F6                 F7                 F8                 F9                 F10                F11
     &studio_unlock     &kp F1             &kp F2             &kp F3             &kp F4             &kp F5                 &kp F6             &kp F7             &kp F8             &kp F9             &kp F10            &kp F11
 // ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤   ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
-//  ---                ---                M_LEFT             M_MIDDLE           M_RIGHT            M_BTN4                 BOOTLOADER         M_LEFT             M_MIDDLE           M_RIGHT            PRTSCRN            F12
-    &trans             &trans             &mkp LCLK          &mkp MCLK          &mkp RCLK          &mkp MB4               &bootloader        &mkp LCLK          &mkp MCLK          &mkp RCLK          &kp PRINTSCREEN    &kp F12
+//  ---                M1(left)           M2(mid)            M3(right)          MB4                MB5                    ---                ---                ---                ---                PRSC               F12
+    &trans             &mkp LCLK          &mkp MCLK          &mkp RCLK          &mkp MB4           &mkp MB5               &trans             &trans             &trans             &trans             &kp PRINTSCREEN    &kp F12
 // ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤   ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
-//  ---                SYS_RESET          ---                BOOTLOADER         ---                M_BTN5                 ---                ---                BOOTLOADER         SYS_RESET          SCRLLOCK           PAUSE
-    &trans             &sys_reset         &trans             &bootloader        &trans             &mkp MB5               &trans             &trans             &bootloader        &sys_reset         &kp SCROLLLOCK     &kp PAUSE_BREAK
+//  ---                ⏮                  ⏯                  ⏭                  MUTE               VOL_DN                 VOL_UP             SCRL_LOCK          PAUSE              SYS_RESET          ---                ---
+    &trans             &kp C_PREV         &kp C_PP           &kp C_NEXT         &kp C_MUTE         &kp C_VOL_DN           &kp C_VOL_UP       &kp SCROLLLOCK     &kp PAUSE_BREAK    &sys_reset         &trans             &trans
 // ╰──────────────────┴──────────────────┴──────────────────┼──────────────────┼──────────────────┼──────────────────┤   ├──────────────────┼──────────────────┼──────────────────┴──────────────────┴──────────────────┴──────────────────╯
-//                                                           ---                ---                ---                    ---                ---                ---
+//                                                           ---                ---                held                   held               ---                ---
                                                              &trans             &trans             &trans                 &trans             &trans             &trans
 //                                                          ╰──────────────────┴──────────────────┴──────────────────╯   ╰──────────────────┴──────────────────┴──────────────────╯
             >;
-            sensor-bindings = <&scroll_encoder>;  // Encoder: Scroll
+            sensor-bindings = <&scroll_encoder>;
+        };
+
+        // ====================================================================
+        // LAYER 4: SETTINGS — BT + RGB + Output + Bootloader — spec 03
+        // ====================================================================
+        // Activated via tri-layer: hold NUM (mo 1) + SYM (mo 2) simultaneously.
+        // BOOTLOADER at bottom-right — hardest position to hit accidentally.
+        // ====================================================================
+        settings_layer {
+            display-name = "SETTINGS";
+            bindings = <
+// ╭──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────╮   ╭──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────╮
+//  ---                BT_CLR_ALL         BT_0               BT_1               BT_2               BT_3                   ---                ---                ---                ---                ---                ---
+    &trans             &bt BT_CLR_ALL     &bt BT_SEL 0       &bt BT_SEL 1       &bt BT_SEL 2       &bt BT_SEL 3           &trans             &trans             &trans             &trans             &trans             &trans
+// ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤   ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
+//  ---                RGB_TOG            RGB_EFF            RGB_EFR            RGB_SPI            RGB_BRI                RGB_BRD            ---                ---                ---                ---                ---
+    &trans             &rgb_ug RGB_TOG    &rgb_ug RGB_EFF    &rgb_ug RGB_EFR    &rgb_ug RGB_SPI    &rgb_ug RGB_BRI        &rgb_ug RGB_BRD    &trans             &trans             &trans             &trans             &trans
+// ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤   ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
+//  ---                OUT_USB            OUT_BLE            ---                ---                ---                    ---                ---                ---                BOOTLOADER         SYS_RESET          ---
+    &trans             &out OUT_USB       &out OUT_BLE       &trans             &trans             &trans                 &trans             &trans             &trans             &bootloader        &sys_reset         &trans
+// ╰──────────────────┴──────────────────┴──────────────────┼──────────────────┼──────────────────┼──────────────────┤   ├──────────────────┼──────────────────┼──────────────────┴──────────────────┴──────────────────┴──────────────────╯
+//                                                           ---                ---                ---                    ---                held               held
+                                                             &trans             &trans             &trans                 &trans             &trans             &trans
+//                                                          ╰──────────────────┴──────────────────┴──────────────────╯   ╰──────────────────┴──────────────────┴──────────────────╯
+            >;
+            sensor-bindings = <&scroll_encoder>;
         };
     };
 };

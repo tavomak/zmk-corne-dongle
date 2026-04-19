@@ -4,3 +4,5 @@ modules/
 tools/
 .west/
 WARP.md
+.claude
+CLAUDE.md
