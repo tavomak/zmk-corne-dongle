@@ -93,7 +93,7 @@ layers:
   - {t: Sft+1, s: Sft+!}
   - {t: Sft+6, s: Sft+^}
   - {t: Alt+1, s: Alt+!}
-  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: Sft+2, s: Sft+@}
   - '&td_quote'
   - {t: '[', s: '{'}
   - {t: Alt+;, s: 'Alt+:'}
@@ -116,7 +116,7 @@ layers:
   - {t: Alt+3, s: Alt+#}
   - {t: Sft+0, s: Sft+)}
   - {t: Sft+5, s: Sft+%}
-  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: ']', s: '}'}
   - {t: 'Sft+]', s: 'Sft+}'}
   - '&macro_arrow'
