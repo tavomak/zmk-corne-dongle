@@ -116,6 +116,24 @@
             tapping-term-ms = <200>;
             bindings = <&kp MINUS>, <&kp LS(N2)>;
         };
+
+        // 1 tap = ! / 2 taps = ¡ — Spanish macOS
+        // LS(N1) = ! and EQUAL = ¡
+        td_excl: td_excl {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp LS(N1)>, <&kp EQUAL>;
+        };
+
+        // 1 tap = ? / 2 taps = ¿ — Spanish macOS
+        // LS(MINUS) = ? and LS(EQUAL) = ¿
+        td_quest: td_quest {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp LS(MINUS)>, <&kp LS(EQUAL)>;
+        };
     };
 
     // ========================================================================
@@ -195,13 +213,13 @@
             bindings = <
 // ╭──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────╮    ╭──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────╮
 //  ---                1                  2                  3                  4                  5                       6                  7                  8                  9                  0                  BSPC
-    &trans             &kp N1             &kp N2             &kp N3             &kp N4             &kp N5                  &kp N6             &kp N7             &kp N8             &kp N9             &kp N0             &kp BSPC
+    &none              &kp N1             &kp N2             &kp N3             &kp N4             &kp N5                  &kp N6             &kp N7             &kp N8             &kp N9             &kp N0             &kp BSPC
 // ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤    ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
 //  ---                +                  -                  *                  /                  =                       ←                  ↓                  ↑                  →                  HOME               PGUP
-    &trans             &kp RBKT           &kp FSLH           &kp LS(RBKT)       &kp LS(N7)         &kp LS(N0)              &kp LEFT           &kp DOWN           &kp UP             &kp RIGHT          &kp HOME           &kp PG_UP
+    &none              &kp RBKT           &kp FSLH           &kp LS(RBKT)       &kp LS(N7)         &kp LS(N0)              &kp LEFT           &kp DOWN           &kp UP             &kp RIGHT          &kp HOME           &kp PG_UP
 // ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤    ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
-//  ---                w←(Opt+←)         w→(Opt+→)          gg(Cmd+↑)          G(Cmd+↓)           ---                     END                PGDN               ^(Cmd+←)           $(Cmd+→)           ---                ---
-    &trans             &kp LA(LEFT)       &kp LA(RIGHT)      &kp LG(UP)         &kp LG(DOWN)       &trans                  &kp END            &kp PG_DN          &kp LG(LEFT)       &kp LG(RIGHT)      &trans             &trans
+//  ---                w←(Opt+←)         w→(Opt+→)          gg(Cmd+↑)          G(Cmd+↓)           ∅                       END                PGDN               ^(Cmd+←)           $(Cmd+→)           ∅                  ∅
+    &none              &kp LA(LEFT)       &kp LA(RIGHT)      &kp LG(UP)         &kp LG(DOWN)       &none                   &kp END            &kp PG_DN          &kp LG(LEFT)       &kp LG(RIGHT)      &none              &none
 // ╰──────────────────┴──────────────────┴──────────────────┼──────────────────┼──────────────────┼──────────────────┤    ├──────────────────┼──────────────────┼──────────────────┴──────────────────┴──────────────────┴──────────────────╯
 //                                                           ---                ---                ---                     ---                held               ---
                                                              &trans             &trans             &trans                  &trans             &trans             &trans
@@ -220,14 +238,14 @@
             display-name = "SYMBOL";
             bindings = <
 // ╭──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────╮   ╭──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────╮
-//  ---                <                  >                  !                  &                  |                      "                  '/"(tap dance)      `                  ~                  \                  BSPC
-    &trans             &kp NON_US_BSLH    &kp LS(NON_US_BSLH) &kp LS(N1)       &kp LS(N6)         &kp LA(N1)             &kp LS(N2)         &td_quote          &kp LBKT           &kp LA(SEMI)       &kp LA(GRAVE)      &kp BSPC
+//  ---                <                  >                  !/¡(td)            &                  |                      "                  '/"(td)            `                  ~                  \                  BSPC
+    &none              &kp NON_US_BSLH    &kp LS(NON_US_BSLH) &td_excl          &kp LS(N6)         &kp LA(N1)             &kp LS(N2)         &td_quote          &kp LBKT           &kp LA(SEMI)       &kp LA(GRAVE)      &kp BSPC
 // ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤   ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
-//  ---                {                  }                  [                  ]                  ?                      _                  -                  ;                  :                  (                  )
-    &trans             &kp LA(SQT)        &kp LA(BSLH)        &kp LA(LBKT)      &kp LA(RBKT)       &kp LS(MINUS)          &kp LS(FSLH)       &kp FSLH           &kp LS(COMMA)      &kp LS(DOT)        &kp LS(N8)         &kp LS(N9)
+//  ---                {                  }                  [                  ]                  ?/¿(td)                _                  -                  ;                  :                  (                  )
+    &none              &kp LA(SQT)        &kp LA(BSLH)        &kp LA(LBKT)      &kp LA(RBKT)       &td_quest              &kp LS(FSLH)       &kp FSLH           &kp LS(COMMA)      &kp LS(DOT)        &kp LS(N8)         &kp LS(N9)
 // ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤   ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
-//  ---                @                  #                  =                  %                  ∅                      +                  *                  =>                 {|}                ---                ---
-    &trans             &kp LA(N2)         &kp LA(N3)          &kp LS(N0)        &kp LS(N5)         &none                  &kp RBKT           &kp LS(RBKT)       &macro_arrow       &macro_block       &trans             &trans
+//  ---                @                  #                  =                  %                  ∅                      +                  *                  =>                 {|}                ∅                  ∅
+    &none              &kp LA(N2)         &kp LA(N3)          &kp LS(N0)        &kp LS(N5)         &none                  &kp RBKT           &kp LS(RBKT)       &macro_arrow       &macro_block       &none              &none
 // ╰──────────────────┴──────────────────┴──────────────────┼──────────────────┼──────────────────┼──────────────────┤   ├──────────────────┼──────────────────┼──────────────────┴──────────────────┴──────────────────┴──────────────────╯
 //                                                           ---                ---                SPC                    ENT                held               ---
                                                              &trans             &trans             &kp SPACE              &kp RET            &trans             &trans
