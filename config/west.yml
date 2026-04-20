@@ -2,8 +2,8 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    - name: mctechnology17
-      url-base: https://github.com/mctechnology17
+    - name: m165437
+      url-base: https://github.com/M165437
     - name: tokyo2006
       url-base: https://github.com/tokyo2006
     - name: englmaxi
@@ -13,9 +13,9 @@ manifest:
       remote: zmkfirmware
       revision: v0.3.0
       import: app/west.yml
-    - name: zmk-nice-oled
-      remote: mctechnology17
-      revision: 46f824abb2bd41f1287c5c68abd14122af6042a3
+    - name: nice-view-gem
+      remote: m165437
+      revision: main
     - name: prospector-zmk-module
       remote: tokyo2006
       revision: change_spi2
