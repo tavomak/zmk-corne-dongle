@@ -44,7 +44,7 @@ layers:
   - NUMBER
   - SYMBOL
   NUMBER:
-  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '1', s: '!'}
   - {t: '2', s: '@'}
   - {t: '3', s: '#'}
@@ -56,7 +56,7 @@ layers:
   - {t: '9', s: (}
   - {t: '0', s: )}
   - {t: '$$mdi:backspace$$', type: backspace}
-  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: ']', s: '}'}
   - {t: /, s: '?'}
   - {t: 'Sft+]', s: 'Sft+}'}
@@ -68,18 +68,18 @@ layers:
   - $$mdi:arrow-right-bold$$
   - HOME
   - PG UP
-  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
   - Alt+$$mdi:arrow-left-bold$$
   - Alt+$$mdi:arrow-right-bold$$
   - Gui+$$mdi:arrow-up-bold$$
   - Gui+$$mdi:arrow-down-bold$$
-  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
   - END
   - PG DN
   - Gui+$$mdi:arrow-left-bold$$
   - Gui+$$mdi:arrow-right-bold$$
-  - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
@@ -87,10 +87,10 @@ layers:
   - {type: held}
   - {t: '$$mdi:transfer$$', type: trans}
   SYMBOL:
-  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
   - '|'
   - Sft+|
-  - {t: Sft+1, s: Sft+!}
+  - '&td_excl'
   - {t: Sft+6, s: Sft+^}
   - {t: Alt+1, s: Alt+!}
   - {t: Sft+2, s: Sft+@}
@@ -99,19 +99,19 @@ layers:
   - {t: Alt+;, s: 'Alt+:'}
   - {t: Alt+`, s: Alt+~}
   - {t: '$$mdi:backspace$$', type: backspace}
-  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: Alt+', s: Alt+"}
   - {t: Alt+\, s: Alt+|}
   - {t: 'Alt+[', s: 'Alt+{'}
   - {t: 'Alt+]', s: 'Alt+}'}
-  - {t: Sft+-, s: Sft+_}
+  - '&td_quest'
   - {t: Sft+/, s: 'Sft+?'}
   - {t: /, s: '?'}
   - {t: 'Sft+,', s: Sft+<}
   - {t: Sft+., s: Sft+>}
   - {t: Sft+8, s: Sft+*}
   - {t: Sft+9, s: Sft+(}
-  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: Alt+2, s: Alt+@}
   - {t: Alt+3, s: Alt+#}
   - {t: Sft+0, s: Sft+)}
@@ -121,8 +121,8 @@ layers:
   - {t: 'Sft+]', s: 'Sft+}'}
   - '&macro_arrow'
   - '&macro_block'
-  - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - $$mdi:keyboard-space$$
