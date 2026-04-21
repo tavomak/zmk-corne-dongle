@@ -6,14 +6,14 @@
 */
 #include <dt-bindings/led/led.h>
 #include <dt-bindings/zmk/matrix_transform.h>
-#include "eyeslash_corne-layouts.dtsi"
+#include "corne-layouts.dtsi"
 
 / {
 
     chosen {
         zmk,kscan = &kscan0;
         zmk,battery = &vbatt;
-        zmk,physical-layout = &eyeslash_corne_layout;
+        zmk,physical-layout = &corne_layout;
         zmk,underglow = &led_strip;
         zmk,backlight = &backlight;
 

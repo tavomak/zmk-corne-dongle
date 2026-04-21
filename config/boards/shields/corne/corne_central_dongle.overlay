@@ -5,7 +5,7 @@
 *
 */
 
-#include "eyeslash_corne.dtsi"
+#include "corne.dtsi"
 
 /{
     chosen {
