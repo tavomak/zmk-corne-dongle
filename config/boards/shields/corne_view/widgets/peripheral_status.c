@@ -5,13 +5,18 @@
  *
  */
 
+#include <zephyr/device.h>
 #include <zephyr/kernel.h>
 
 #include <zephyr/logging/log.h>
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
+#include <drivers/ext_power.h>
+
+#include <zmk/activity.h>
 #include <zmk/battery.h>
 #include <zmk/display.h>
+#include <zmk/events/activity_state_changed.h>
 #include <zmk/events/usb_conn_state_changed.h>
 #include <zmk/event_manager.h>
 #include <zmk/events/battery_state_changed.h>
@@ -105,6 +110,40 @@ ZMK_DISPLAY_WIDGET_LISTENER(widget_peripheral_status, struct peripheral_status_s
                             output_status_update_cb, get_state)
 ZMK_SUBSCRIPTION(widget_peripheral_status, zmk_split_peripheral_status_changed);
 
+// VCC is shared with the RGB strip, which cuts it while idle. The panel loses its memory and the
+// driver only clears it at boot, so bring power back and repaint every line on wake.
+// The delay runs after the RGB listener, which may disable VCC again if the strip is off.
+#define DISPLAY_RESTORE_DELAY_MS 100
+#define DISPLAY_POWER_ON_DELAY_MS 50
+
+static void restore_display_cb(struct k_work *work) {
+    const struct device *ext_power = DEVICE_DT_GET(DT_INST(0, zmk_ext_power_generic));
+
+    if (!device_is_ready(ext_power) || ext_power_enable(ext_power) != 0) {
+        LOG_ERR("Unable to restore display power");
+        return;
+    }
+
+    k_msleep(DISPLAY_POWER_ON_DELAY_MS);
+    lv_obj_invalidate(lv_scr_act());
+}
+
+static K_WORK_DELAYABLE_DEFINE(restore_display_work, restore_display_cb);
+
+static int display_power_listener(const zmk_event_t *eh) {
+    if (zmk_activity_get_state() == ZMK_ACTIVITY_ACTIVE) {
+        k_work_reschedule_for_queue(zmk_display_work_q(), &restore_display_work,
+                                    K_MSEC(DISPLAY_RESTORE_DELAY_MS));
+    }
+    return ZMK_EV_EVENT_BUBBLE;
+}
+
+ZMK_LISTENER(display_power, display_power_listener);
+ZMK_SUBSCRIPTION(display_power, zmk_activity_state_changed);
+#if IS_ENABLED(CONFIG_USB_DEVICE_STACK)
+ZMK_SUBSCRIPTION(display_power, zmk_usb_conn_state_changed);
+#endif /* IS_ENABLED(CONFIG_USB_DEVICE_STACK) */
+
 int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     widget->obj = lv_obj_create(parent);
     lv_obj_set_size(widget->obj, 160, 68);
@@ -119,6 +158,9 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     sys_slist_append(&widgets, &widget->node);
     widget_battery_status_init();
     widget_peripheral_status_init();
+
+    // Saved settings can leave VCC off at boot, and no wake event follows
+    k_work_reschedule_for_queue(zmk_display_work_q(), &restore_display_work, K_SECONDS(2));
 
     return 0;
 }

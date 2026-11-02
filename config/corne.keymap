@@ -13,6 +13,7 @@
 // ============================================================================
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/ext_power.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
 #include <dt-bindings/zmk/outputs.h>
@@ -272,6 +273,7 @@
         // Activated via tri-layer: hold NUM (mo 1) + SYM (mo 2) simultaneously.
         // Top row: keys 1-4 = BT profiles 0-3, key 5 = USB. Same spot as NUMBER digits.
         // Hold P for 2 s = unpair the ACTIVE profile. No clear-all on purpose.
+        // Y = VCC on, for all parts: use it if the dongle OLED stays dark after flashing.
         // Reset behaviors run on the half that was pressed, hence one set per half.
         // The dongle has no keys: its bootloader needs the physical button.
         // ====================================================================
@@ -279,8 +281,8 @@
             display-name = "SETTINGS";
             bindings = <
 // ╭──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────╮   ╭──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────┬──────────────────╮
-//  ---                BT 1               BT 2               BT 3               BT 4               USB                    ---                ---                ---                ---                hold 2s=CLEAR      ---
-    &none              &macro_bt_sel 0    &macro_bt_sel 1    &macro_bt_sel 2    &macro_bt_sel 3    &out OUT_USB           &none              &none              &none              &none              &hold_bt_clr 0 0   &none
+//  ---                BT 1               BT 2               BT 3               BT 4               USB                    VCC ON             ---                ---                ---                hold 2s=CLEAR      ---
+    &none              &macro_bt_sel 0    &macro_bt_sel 1    &macro_bt_sel 2    &macro_bt_sel 3    &out OUT_USB           &ext_power EP_ON   &none              &none              &none              &hold_bt_clr 0 0   &none
 // ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤   ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
 //  ---                RGB_TOG            RGB_EFF            RGB_EFR            RGB_SPI            RGB_BRI                RGB_BRD            ---                ---                ---                ---                ---
     &none              &rgb_ug RGB_TOG    &rgb_ug RGB_EFF    &rgb_ug RGB_EFR    &rgb_ug RGB_SPI    &rgb_ug RGB_BRI        &rgb_ug RGB_BRD    &none              &none              &none              &none              &none

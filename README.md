@@ -31,11 +31,16 @@ Holding P for 2 seconds unpairs the active profile only. There is deliberately n
 ## Displays
 
 - **Dongle:** [zmk-dongle-display](https://github.com/englmaxi/zmk-dongle-display) shows layer, output, battery, WPM and Mac modifiers.
-- **Halves:** the in-repo `corne_view` shield (`config/boards/shields/corne_view`), based on ZMK's own nice!view widget. It shows battery, connection and a fixed logo, and only redraws when the state changes.
+- **Halves:** the in-repo `corne_view` shield (`config/boards/shields/corne_view`), based on ZMK's own nice!view widget. It shows battery, connection and a fixed logo. After 30 seconds without using that half, its display turns off with the RGB strip, since both share VCC. It comes back when you press a key on that half.
 
 The image is the LazyVim dashboard logo. To change it, replace `logo_map` in `widgets/art.c` with a 140x68, 1-bit image, stored rotated so the top of the picture is the right edge of each row. Colors are inverted by `CONFIG_CORNE_VIEW_WIDGET_INVERTED=y` in `corne_view.conf`.
 
 Peripherals cannot show the active layer or modifiers: only the central knows them.
+
+## Power
+
+- **Halves:** deep sleep after 30 minutes without use. A key press wakes them.
+- **Dongle:** runs on battery or USB. On battery, it enters deep sleep after 24 hours without use. No key can wake it, so it then needs the reset button. It never enters deep sleep while USB power is present.
 
 ## Building and flashing
 
