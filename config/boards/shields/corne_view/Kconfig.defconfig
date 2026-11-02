@@ -1,0 +1,43 @@
+# Based on the nice_view shield from ZMK v0.3.0 (peripheral role only)
+# Copyright (c) 2023 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+if SHIELD_CORNE_VIEW
+
+config LV_Z_VDB_SIZE
+    default 100
+
+config LV_DPI_DEF
+    default 161
+
+config LV_Z_BITS_PER_PIXEL
+    default 1
+
+choice LV_COLOR_DEPTH
+    default LV_COLOR_DEPTH_1
+endchoice
+
+choice ZMK_DISPLAY_WORK_QUEUE
+    default ZMK_DISPLAY_WORK_QUEUE_DEDICATED
+endchoice
+
+choice ZMK_DISPLAY_STATUS_SCREEN
+    default ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+endchoice
+
+config LV_Z_MEM_POOL_SIZE
+    default 4096 if ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+
+config ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+    imply CORNE_VIEW_WIDGET_STATUS
+
+config CORNE_VIEW_WIDGET_STATUS
+    bool "Corne nice!view status widget"
+    select LV_FONT_MONTSERRAT_16
+    select LV_USE_IMG
+    select LV_USE_CANVAS
+
+config CORNE_VIEW_WIDGET_INVERTED
+    bool "Invert status widget colors"
+
+endif # SHIELD_CORNE_VIEW

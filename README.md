@@ -1,193 +1,57 @@
 # Corne Dongle - ZMK Keyboard Configuration
 
-Tavomak's custom wireless split keyboard configuration for the Corne keyboard with dongle support, built with ZMK firmware. This configuration features advanced functionality including mouse control, RGB lighting, encoders, and ZMK Studio support.
+ZMK firmware configuration for a wireless 42-key Corne with a USB dongle, tuned for macOS with the Spanish (Spain) ISO layout.
 
-## ✨ Features
+## Hardware
 
-- **🔌 Wireless Dongle Mode**: Central dongle with left and right peripheral halves
-- **🖱️ Mouse Support**: Scroll and button clicks via keyboard (no cursor movement by default)
-- **🎨 RGB Lighting**: Customizable RGB underglow effects
-- **🎡 Rotary Encoder**: Volume control on base layer and scroll on other layers
-- **📊 OLED Display**: Battery status, WPM counter, and modifier indicators
-- **🔋 Power Efficient**: Optimized power consumption with automatic sleep
-- **🎹 ZMK Studio**: Real-time keymap editing support
-- **📱 E-Paper Display**: Support for nice!view displays on peripherals
-- **⌨️ QWERTY Layout**: Standard QWERTY with 4 customizable layers
+- 3x nice!nano v2: central dongle, left half, right half
+- Dongle display: SH1106 OLED over I2C
+- Halves display: nice!view over SPI
 
-## 📋 Hardware Requirements
+## Keymap
 
-- **MCU**: 3x nice!nano v2 boards
-- **Keyboard**: Corne PCB (compatible with Eyeslash Corne variant)
-- **Display**: OLED for central dongle, E-paper displays for peripherals
-- **Encoders**: EC11 rotary encoders (optional)
-- **Switches**: Cherry MX compatible switches
-- **Keycaps**: 42-key set
+![Keymap View](./keymap-drawer/corne.svg)
 
+| Layer | Activation | Content |
+|-------|------------|---------|
+| 0 BASE | Default | QWERTY with ñ and ´ |
+| 1 NUMBER | Hold `mo 1` | Numbers, operators, nvim-style navigation |
+| 2 SYMBOL | Hold `mo 2` | Symbols, tap dances, `=>` and `{}` macros |
+| 3 FUNCTION | Hold Space or Enter | F1-F12, media, mouse clicks |
+| 4 SETTINGS | Hold `mo 1` + `mo 2` | Devices, RGB, bootloader |
 
-## 🎨 Keymap Visualization
+Keep macOS on the Spanish layout, including when writing English: all keycodes assume it, and the firmware cannot detect the active OS layout.
 
-![Keymap View](./keymap-drawer/eyeslash_corne.svg)
+### Switching devices
 
-## ⌨️ Keymap Layers
+On SETTINGS, the keys under digits 1-4 select Bluetooth profiles 1-4 and also switch the output to Bluetooth. The key under 5 switches to USB.
 
-### Layer 0: BASE (Default)
-Standard QWERTY layout with modifier keys and layer access.
+Holding P for 2 seconds unpairs the active profile only. There is deliberately no clear-all key. To pair a device again, select its profile, hold P for 2 seconds, and pair from the device.
 
-- **Tap Dance**: Shift (single tap) / Caps Lock (double tap)
-- **Layer-Tap**: Space/Enter activate Layer 3 when held
-- **Momentary Layers**: Access to NUMBER and SYMBOL layers
+## Displays
 
-### Layer 1: NUMBER
-Numbers, navigation, and system controls.
+- **Dongle:** [zmk-dongle-display](https://github.com/englmaxi/zmk-dongle-display) shows layer, output, battery, WPM and Mac modifiers.
+- **Halves:** the in-repo `corne_view` shield (`config/boards/shields/corne_view`), based on ZMK's own nice!view widget. It shows battery, connection and a fixed logo, and only redraws when the state changes.
 
-- **Numbers**: 1-9, 0 on top row
-- **Bluetooth**: BT clear, device selection (0-3)
-- **RGB Controls**: On/Off, effects, speed, brightness
-- **Navigation**: Arrow keys, Home, End, Page Up/Down
-- **Mouse**: Scroll control via encoder
+The image is the LazyVim dashboard logo. To change it, replace `logo_map` in `widgets/art.c` with a 140x68, 1-bit image, stored rotated so the top of the picture is the right edge of each row. Colors are inverted by `CONFIG_CORNE_VIEW_WIDGET_INVERTED=y` in `corne_view.conf`.
 
-### Layer 2: SYMBOL
-All symbols and special characters.
+Peripherals cannot show the active layer or modifiers: only the central knows them.
 
-- **Top Row**: `! @ # $ % ^ & * ( )`
-- **Middle Row**: `- = [ ] \ ` ` with mouse buttons
-- **Bottom Row**: `_ + { } | ~`
-- **Output Toggle**: Switch between USB and BLE
-- **Mouse Buttons**: Left, Middle, Right, MB4, MB5
+## Building and flashing
 
-### Layer 3: FUNCTION
-Function keys and system commands.
+GitHub Actions builds the firmware on every push. Download the artifacts from the run, then for each board:
 
-- **Function Keys**: F1-F12
-- **System**: Bootloader, System Reset, Studio Unlock
-- **Special Keys**: Print Screen, Scroll Lock, Pause Break
-- **Mouse Controls**: Full mouse button support
+1. Double-tap the reset button. On a half, SETTINGS has bootloader keys, but the dongle needs its physical button.
+2. Copy the matching `.uf2` file to the drive that appears.
 
-## 🚀 Building the Firmware
+Flash `settings_reset` only to wipe a board's saved settings and pairings.
 
+## ZMK Studio
 
-The project uses GitHub Actions for automated builds. Each push will generate firmware files for:
+The dongle firmware includes ZMK Studio. Connect the dongle over USB and open [zmk.studio](https://zmk.studio/).
 
-- **Central Dongle** (with OLED display)
-- **Left Peripheral** (with E-paper display)
-- **Right Peripheral** (with E-paper display)
-- **Settings Reset**
+## Acknowledgments
 
-## 📝 ZMK Studio
-
-This configuration includes ZMK Studio support for real-time keymap editing:
-
-1. Flash the central dongle with the Studio-enabled firmware
-2. Connect via USB
-3. Open [ZMK Studio](https://zmk.studio/)
-4. Edit your keymap in real-time
-5. Changes are saved to the keyboard automatically
-
-## 🔌 Flashing Firmware
-
-1. Download the firmware files from GitHub Actions artifacts
-2. Double-tap the reset button on your nice!nano
-3. Drag and drop the `.uf2` file to the mounted drive
-4. Wait for the board to reboot
-5. Repeat for all three boards (central, left, right)
-
-
-## 📱 Active Widgets
-
-This configuration uses multiple display widgets to enhance the user experience across the central dongle and peripheral keyboards.
-
-### nice!view Widget
-
-The e-paper displays use the [nice!view ZMK widget](https://nicekeyboards.com/nice-view/) which provides:
-
-- **Battery Status**: Real-time battery level indicator
-- **Connection Status**: Visual feedback for Bluetooth connectivity
-- **Layer Indicators**: Current active layer display
-- **WPM Counter**: Words per minute typing speed
-- **Low Power Consumption**: E-paper technology for extended battery life
-
-![Nice view](./assets/niceview.JPG)
-
-### nice!view Widget Configuration
-
-The peripheral keyboards are configured with `nice_epaper` shield in `build.yaml`:
-
-```yaml
-- board: nice_nano_v2
-  shield: eyeslash_corne_peripheral_left nice_epaper
-- board: nice_nano_v2
-  shield: eyeslash_corne_peripheral_right nice_epaper
-```
-
-For detailed information about the e-paper widget implementation, check out the [mctechnology17 nice!view widget repository](https://github.com/mctechnology17/zmk-config).
-
-### Dongle Display Widget
-
-The central dongle uses the [zmk-dongle-display module](https://github.com/englmaxi/zmk-dongle-display) which provides enhanced display functionality:
-
-- **Peripheral Battery Status**: Monitor battery levels of left and right keyboard halves
-- **Mac Modifiers**: Visual indicators for Command, Option, Control, and Shift keys
-- **WPM Counter**: Real-time typing speed display
-- **Connection Status**: Bluetooth connectivity feedback for each peripheral
-- **Central Dongle Focus**: Optimized display for dongle-based split keyboard setups
-
-![Dongle Display](./assets/dongle.JPG)
-
-### Dongle Display Widget Configuration
-
-The dongle display features are enabled in the configuration:
-
-```conf
-CONFIG_ZMK_DONGLE_DISPLAY_DONGLE_BATTERY=y
-CONFIG_ZMK_DONGLE_DISPLAY_MAC_MODIFIERS=y
-CONFIG_ZMK_DONGLE_DISPLAY_WPM=y
-```
-
-This module is particularly useful for monitoring the status of both keyboard halves from a single central display, making it ideal for wireless split keyboard configurations.
-
-For more information, visit the [zmk-dongle-display repository](https://github.com/englmaxi/zmk-dongle-display).
-
-
-## 🔧 Configuration
-
-### Main Features
-
-```conf
-# Sleep timeout: 1 hour of inactivity
-CONFIG_ZMK_IDLE_SLEEP_TIMEOUT=3600000
-
-# Encoder support
-CONFIG_EC11=y
-
-# Mouse/Pointing device
-CONFIG_ZMK_POINTING=y
-
-# Display features
-CONFIG_ZMK_DISPLAY=y
-CONFIG_ZMK_DONGLE_DISPLAY_DONGLE_BATTERY=y
-CONFIG_ZMK_DONGLE_DISPLAY_MAC_MODIFIERS=y
-CONFIG_ZMK_DONGLE_DISPLAY_WPM=y
-
-# Bluetooth power
-CONFIG_BT_CTLR_TX_PWR_PLUS_8=y
-```
-
-### Mouse Configuration
-
-Mouse speed and acceleration can be adjusted in the keymap:
-
-```c
-#define ZMK_POINTING_DEFAULT_MOVE_VAL 1200  // Mouse speed
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 25    // Scroll speed
-```
-
-## 🙏 Acknowledgments
-
-- [ZMK Firmware](https://zmk.dev/) - The keyboard firmware
-- [Corne Keyboard](https://github.com/foostan/crkbd) - Original keyboard design
-- [nice!view](https://nicekeyboards.com/nice-view/) - E-paper display support
-- ZMK Community - For support and contributions
-- [mctechnology17](https://github.com/mctechnology17) - nice!view e-paper widget implementation and ZMK configurations
-- [englmaxi/zmk-dongle-display](https://github.com/englmaxi/zmk-dongle-display) - Dongle display module for showing peripheral battery status and modifiers
-
----
+- [ZMK Firmware](https://zmk.dev/)
+- [Corne keyboard](https://github.com/foostan/crkbd)
+- [zmk-dongle-display](https://github.com/englmaxi/zmk-dongle-display) by englmaxi
