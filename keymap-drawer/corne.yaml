@@ -179,7 +179,7 @@ layers:
   - '&macro_bt_sel 2'
   - '&macro_bt_sel 3'
   - OUT USB
-  - {t: '$$mdi:minus-circle-outline$$', type: none}
+  - EP ON
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:minus-circle-outline$$', type: none}
