@@ -117,6 +117,72 @@ parse_config:
     type: trans
 
   raw_binding_map:
+    # Spanish macOS: real output of each keycode, and this keymap's own behaviors
+    "&kp LGUI": {"tap": "$$mdi:apple-keyboard-command$$"}
+    "&kp SEMI": {"tap": "Ñ"}
+    "&kp SQT": {"tap": "´", "shifted": "¨"}
+    "&kp FSLH": {"tap": "-", "shifted": "_"}
+    "&kp COMMA": {"tap": ",", "shifted": ";"}
+    "&kp DOT": {"tap": ".", "shifted": ":"}
+    "&kp N1": {"tap": "1", "shifted": "!"}
+    "&kp N2": {"tap": "2", "shifted": "\""}
+    "&kp N3": {"tap": "3", "shifted": "·"}
+    "&kp N4": {"tap": "4", "shifted": "$"}
+    "&kp N5": {"tap": "5", "shifted": "%"}
+    "&kp N6": {"tap": "6", "shifted": "&"}
+    "&kp N7": {"tap": "7", "shifted": "/"}
+    "&kp N8": {"tap": "8", "shifted": "("}
+    "&kp N9": {"tap": "9", "shifted": ")"}
+    "&kp N0": {"tap": "0", "shifted": "="}
+    "&kp RBKT": {"tap": "+", "shifted": "*"}
+    "&kp LS(RBKT)": {"tap": "*"}
+    "&kp LS(N7)": {"tap": "/"}
+    "&kp LS(N0)": {"tap": "="}
+    "&kp LA(LEFT)": {"tap": "Pal ←"}
+    "&kp LA(RIGHT)": {"tap": "Pal →"}
+    "&kp LG(UP)": {"tap": "Doc ↑"}
+    "&kp LG(DOWN)": {"tap": "Doc ↓"}
+    "&kp LG(LEFT)": {"tap": "Lín ←"}
+    "&kp LG(RIGHT)": {"tap": "Lín →"}
+    "&kp NON_US_BSLH": {"tap": "<", "shifted": ">"}
+    "&kp LS(NON_US_BSLH)": {"tap": ">"}
+    "&kp LS(N8)": {"tap": "("}
+    "&kp LS(N9)": {"tap": ")"}
+    "&kp LS(N2)": {"tap": "\""}
+    "&kp LBKT": {"tap": "`"}
+    "&kp LA(SEMI)": {"tap": "~"}
+    "&kp LA(GRAVE)": {"tap": "\\"}
+    "&kp LA(SQT)": {"tap": "{"}
+    "&kp LA(BSLH)": {"tap": "}"}
+    "&kp LA(LBKT)": {"tap": "["}
+    "&kp LA(RBKT)": {"tap": "]"}
+    "&kp LA(N1)": {"tap": "|"}
+    "&kp LS(FSLH)": {"tap": "_"}
+    "&kp LA(N2)": {"tap": "@"}
+    "&kp LA(N3)": {"tap": "#"}
+    "&kp LS(N6)": {"tap": "&"}
+    "&kp LS(N5)": {"tap": "%"}
+    "&kp LS(N4)": {"tap": "$"}
+    "&kp LS(COMMA)": {"tap": ";"}
+    "&kp LS(DOT)": {"tap": ":"}
+    "&td_excl": {"tap": "!", "shifted": "¡"}
+    "&td_quest": {"tap": "?", "shifted": "¿"}
+    "&td_quote": {"tap": "'", "shifted": "\""}
+    "&td_shift_caps": {"tap": "$$mdi:apple-keyboard-shift$$", "shifted": "CapsWord"}
+    "&mt_ctrl_tab LCTRL TAB": {"tap": "$$mdi:keyboard-tab$$", "hold": "$$mdi:apple-keyboard-control$$"}
+    "&macro_arrow": "=>"
+    "&macro_block": "{|}"
+    "&macro_caret": "^"
+    "&macro_bt_sel 0": {"shifted": "$$mdi:bluetooth-connect$$", "tap": "", "hold": 1}
+    "&macro_bt_sel 1": {"shifted": "$$mdi:bluetooth-connect$$", "tap": "", "hold": 2}
+    "&macro_bt_sel 2": {"shifted": "$$mdi:bluetooth-connect$$", "tap": "", "hold": 3}
+    "&macro_bt_sel 3": {"shifted": "$$mdi:bluetooth-connect$$", "tap": "", "hold": 4}
+    "&out OUT_USB": {"tap": "$$mdi:usb$$"}
+    "&hold_bt_clr 0 0": {"tap": "Borrar", "hold": "2 s"}
+    "&ext_power EP_ON": "VCC ON"
+    "&studio_unlock": "Studio"
+    "&mkp MB4": "MB4"
+    "&mkp MB5": "MB5"
     # Layers
     "&ltq 1 BACKSPACE":
       tap:  $$mdi:backspace$$

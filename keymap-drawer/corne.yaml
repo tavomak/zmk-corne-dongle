@@ -23,8 +23,8 @@ layers:
   - J
   - K
   - L
-  - {t: ;, s: ':'}
-  - {t: '''', s: '"'}
+  - Ñ
+  - {t: ´, s: ¨}
   - $$mdi:apple-keyboard-shift$$
   - Z
   - X
@@ -33,12 +33,12 @@ layers:
   - B
   - N
   - M
-  - {t: ',', s: <}
-  - {t: ., s: '>'}
-  - {t: /, s: '?'}
-  - '&td_shift_caps'
+  - {t: ',', s: ;}
+  - {t: ., s: ':'}
+  - {t: '-', s: _}
+  - {t: '$$mdi:apple-keyboard-shift$$', s: CapsWord}
   - $$mdi:apple-keyboard-option$$
-  - LGUI
+  - $$mdi:apple-keyboard-command$$
   - {t: '$$mdi:keyboard-space$$', h: FUNCTION}
   - {t: '$$mdi:keyboard-return$$', h: FUNCTION}
   - NUMBER
@@ -46,22 +46,22 @@ layers:
   NUMBER:
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '1', s: '!'}
-  - {t: '2', s: '@'}
-  - {t: '3', s: '#'}
+  - {t: '2', s: '"'}
+  - {t: '3', s: ·}
   - {t: '4', s: $}
   - {t: '5', s: '%'}
-  - {t: '6', s: ^}
-  - {t: '7', s: '&'}
-  - {t: '8', s: '*'}
-  - {t: '9', s: (}
-  - {t: '0', s: )}
+  - {t: '6', s: '&'}
+  - {t: '7', s: /}
+  - {t: '8', s: (}
+  - {t: '9', s: )}
+  - {t: '0', s: '='}
   - {t: '$$mdi:backspace$$', type: backspace}
   - {t: '$$mdi:minus-circle-outline$$', type: none}
-  - {t: ']', s: '}'}
-  - {t: /, s: '?'}
-  - {t: 'Sft+]', s: 'Sft+}'}
-  - {t: Sft+7, s: Sft+&}
-  - {t: Sft+0, s: Sft+)}
+  - {t: +, s: '*'}
+  - {t: '-', s: _}
+  - '*'
+  - /
+  - '='
   - $$mdi:arrow-left-bold$$
   - $$mdi:arrow-down-bold$$
   - $$mdi:arrow-up-bold$$
@@ -69,15 +69,15 @@ layers:
   - HOME
   - PG UP
   - {t: '$$mdi:minus-circle-outline$$', type: none}
-  - Alt+$$mdi:arrow-left-bold$$
-  - Alt+$$mdi:arrow-right-bold$$
-  - Gui+$$mdi:arrow-up-bold$$
-  - Gui+$$mdi:arrow-down-bold$$
+  - Pal ←
+  - Pal →
+  - Doc ↑
+  - Doc ↓
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - END
   - PG DN
-  - Gui+$$mdi:arrow-left-bold$$
-  - Gui+$$mdi:arrow-right-bold$$
+  - Lín ←
+  - Lín →
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:transfer$$', type: trans}
@@ -88,41 +88,41 @@ layers:
   - {t: '$$mdi:transfer$$', type: trans}
   SYMBOL:
   - {t: '$$mdi:minus-circle-outline$$', type: none}
-  - '|'
-  - Sft+|
-  - {t: Sft+8, s: Sft+*}
-  - {t: Sft+9, s: Sft+(}
-  - '&td_excl'
-  - {t: Sft+2, s: Sft+@}
-  - '&td_quote'
-  - {t: '[', s: '{'}
-  - {t: Alt+;, s: 'Alt+:'}
-  - {t: Alt+`, s: Alt+~}
+  - {t: <, s: '>'}
+  - '>'
+  - (
+  - )
+  - {t: '!', s: ¡}
+  - '"'
+  - {t: '''', s: '"'}
+  - '`'
+  - '~'
+  - \
   - {t: '$$mdi:backspace$$', type: backspace}
   - {t: '$$mdi:minus-circle-outline$$', type: none}
-  - {t: Alt+', s: Alt+"}
-  - {t: Alt+\, s: Alt+|}
-  - {t: 'Alt+[', s: 'Alt+{'}
-  - {t: 'Alt+]', s: 'Alt+}'}
-  - '&td_quest'
-  - {t: Alt+1, s: Alt+!}
-  - {t: /, s: '?'}
-  - {t: ']', s: '}'}
-  - {t: 'Sft+]', s: 'Sft+}'}
-  - {t: Sft+7, s: Sft+&}
-  - {t: Sft+/, s: 'Sft+?'}
+  - '{'
+  - '}'
+  - '['
+  - ']'
+  - {t: '?', s: ¿}
+  - '|'
+  - {t: '-', s: _}
+  - {t: +, s: '*'}
+  - '*'
+  - /
+  - _
   - {t: '$$mdi:minus-circle-outline$$', type: none}
-  - {t: Alt+2, s: Alt+@}
-  - {t: Alt+3, s: Alt+#}
-  - {t: Sft+6, s: Sft+^}
-  - {t: Sft+5, s: Sft+%}
-  - {t: Sft+4, s: Sft+$}
-  - {t: Sft+0, s: Sft+)}
-  - '&macro_arrow'
-  - {t: 'Sft+,', s: Sft+<}
-  - {t: Sft+., s: Sft+>}
-  - '&macro_block'
-  - '&macro_caret'
+  - '@'
+  - '#'
+  - '&'
+  - '%'
+  - $
+  - '='
+  - =>
+  - ;
+  - ':'
+  - '{|}'
+  - ^
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - $$mdi:keyboard-space$$
@@ -130,7 +130,7 @@ layers:
   - {t: '$$mdi:transfer$$', type: trans}
   - {type: held}
   FUNCTION:
-  - '&studio_unlock'
+  - Studio
   - F1
   - F2
   - F3
@@ -146,8 +146,8 @@ layers:
   - $$mdi:mouse-left-click-outline$$
   - $$mdi:mouse-scroll-wheel$$
   - $$mdi:mouse-right-click-outline$$
-  - '&mkp MB4'
-  - '&mkp MB5'
+  - MB4
+  - MB5
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
@@ -174,16 +174,16 @@ layers:
   - {t: '$$mdi:transfer$$', type: trans}
   SETTINGS:
   - {t: '$$mdi:minus-circle-outline$$', type: none}
-  - '&macro_bt_sel'
-  - '&macro_bt_sel 1'
-  - '&macro_bt_sel 2'
-  - '&macro_bt_sel 3'
-  - OUT USB
-  - EP ON
+  - {h: '1', s: '$$mdi:bluetooth-connect$$'}
+  - {h: '2', s: '$$mdi:bluetooth-connect$$'}
+  - {h: '3', s: '$$mdi:bluetooth-connect$$'}
+  - {h: '4', s: '$$mdi:bluetooth-connect$$'}
+  - $$mdi:usb$$
+  - VCC ON
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:minus-circle-outline$$', type: none}
-  - {t: '$$mdi:minus-circle-outline$$', h: '&macro_bt_clr'}
+  - {t: Borrar, h: 2 s}
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - {t: '$$mdi:minus-circle-outline$$', type: none}
   - RGB TOG
