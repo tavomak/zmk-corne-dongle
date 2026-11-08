@@ -120,6 +120,7 @@ parse_config:
     # Spanish macOS: real output of each keycode, and this keymap's own behaviors
     "&kp LGUI": {"tap": "$$mdi:apple-keyboard-command$$"}
     "&kp SEMI": {"tap": "Ñ"}
+    "&kp BSLH": {"tap": "Ç"}
     "&kp SQT": {"tap": "´", "shifted": "¨"}
     "&kp FSLH": {"tap": "-", "shifted": "_"}
     "&kp COMMA": {"tap": ",", "shifted": ";"}

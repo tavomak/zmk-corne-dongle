@@ -40,7 +40,7 @@ Peripherals cannot show the active layer or modifiers: only the central knows th
 ## Power
 
 - **Halves:** deep sleep after 30 minutes without use. A key press wakes them.
-- **Dongle:** runs on battery or USB. On battery, it enters deep sleep after 24 hours without use. No key can wake it, so it then needs the reset button. It never enters deep sleep while USB power is present.
+- **Dongle:** runs on battery or USB. On battery, it enters deep sleep after 8 hours without use. No key can wake it, so it then needs the reset button. It never enters deep sleep while USB power is present.
 
 ## Building and flashing
 

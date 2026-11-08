@@ -191,9 +191,9 @@
         // LAYER 1: NUMBER — Numbers + Operators + nvim Navigation — spec 04
         // ====================================================================
         // Home row left:   + - * / =  (operators, Spanish macOS keycodes)
-        // Home row right:  ← ↓ ↑ → HOME PGUP  (hjkl navigation)
-        // Bottom row left: w← w→ gg G  (word/doc jumps)
-        // Bottom row right: END PGDN line-start line-end
+        // Home row right:  ← ↓ ↑ → PGUP HOME  (hjkl navigation)
+        // Bottom row left: ç on X
+        // Bottom row right: word← doc-end doc-start word→ PGDN END  (jumps under the arrows)
         // ====================================================================
         lower_layer {
             display-name = "NUMBER";
@@ -202,11 +202,11 @@
 //  ---                1                  2                  3                  4                  5                       6                  7                  8                  9                  0                  BSPC
     &none              &kp N1             &kp N2             &kp N3             &kp N4             &kp N5                  &kp N6             &kp N7             &kp N8             &kp N9             &kp N0             &kp BSPC
 // ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤    ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
-//  ---                +                  -                  *                  /                  =                       ←                  ↓                  ↑                  →                  HOME               PGUP
-    &none              &kp RBKT           &kp FSLH           &kp LS(RBKT)       &kp LS(N7)         &kp LS(N0)              &kp LEFT           &kp DOWN           &kp UP             &kp RIGHT          &kp HOME           &kp PG_UP
+//  ---                +                  -                  *                  /                  =                       ←                  ↓                  ↑                  →                  PGUP               HOME
+    &none              &kp RBKT           &kp FSLH           &kp LS(RBKT)       &kp LS(N7)         &kp LS(N0)              &kp LEFT           &kp DOWN           &kp UP             &kp RIGHT          &kp PG_UP          &kp HOME
 // ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤    ├──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┼──────────────────┤
-//  ---                w←(Opt+←)         w→(Opt+→)          gg(Cmd+↑)          G(Cmd+↓)           ∅                       END                PGDN               ^(Cmd+←)           $(Cmd+→)           ∅                  ∅
-    &none              &kp LA(LEFT)       &kp LA(RIGHT)      &kp LG(UP)         &kp LG(DOWN)       &none                   &kp END            &kp PG_DN          &kp LG(LEFT)       &kp LG(RIGHT)      &none              &none
+//  ---                ∅                  ç                  ∅                  ∅                  ∅                       w←(Opt+←)          G(Cmd+↓)           gg(Cmd+↑)          w→(Opt+→)          PGDN               END
+    &none              &none              &kp BSLH           &none              &none              &none                   &kp LA(LEFT)       &kp LG(DOWN)       &kp LG(UP)         &kp LA(RIGHT)      &kp PG_DN          &kp END
 // ╰──────────────────┴──────────────────┴──────────────────┼──────────────────┼──────────────────┼──────────────────┤    ├──────────────────┼──────────────────┼──────────────────┴──────────────────┴──────────────────┴──────────────────╯
 //                                                           ---                ---                ---                     ---                held               ---
                                                              &trans             &trans             &trans                  &trans             &trans             &trans
